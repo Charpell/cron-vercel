@@ -6,8 +6,10 @@ export async function middleware(request: NextRequest, _next: NextFetchEvent) {
   const matchesProtectedPath = protectedPaths.some((path) =>
     pathname.startsWith(path)
   );
+  console.log('matchesProtectedPath', matchesProtectedPath)
   if (matchesProtectedPath) {
     const token = await getToken({ req: request });
+    console.log('token', token)
     if (!token) {
       const url = new URL(`/api/auth/signin`, request.url);
       url.searchParams.set("callbackUrl ", encodeURI(request.url));
